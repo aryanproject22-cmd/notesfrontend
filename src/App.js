@@ -65,10 +65,10 @@ function App() {
       </header>
       
       <main className="app-main">
-        <FilterBar 
+        {/* <FilterBar 
           onFiltersChange={handleFiltersChange}
           loading={loading}
-        />
+        /> */}
         
         <NotesList 
           notes={notes}
