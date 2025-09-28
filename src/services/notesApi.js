@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 class NotesApiService {
   async fetchNotes(params = {}) {
@@ -21,9 +21,6 @@ class NotesApiService {
       if (inputType) queryParams.append('inputType', inputType);
       if (startDate) queryParams.append('startDate', startDate);
       if (endDate) queryParams.append('endDate', endDate);
-      // Default sorting - newest first
-      queryParams.append('sort', 'desc');
-      queryParams.append('sortBy', 'createdAt');
 
       const url = `${API_BASE_URL}/notes?${queryParams.toString()}`;
       
