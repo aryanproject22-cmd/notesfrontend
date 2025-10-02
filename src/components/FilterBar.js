@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './FilterBar.css';
 
-const FilterBar = ({ onFiltersChange, loading }) => {
+const FilterBar = ({ onFiltersChange, loading, hideSubject }) => {
   const [filters, setFilters] = useState({
     search: '',
-    inputType: '',
     startDate: '',
-    endDate: ''
+    endDate: '',
+    language: '',
+    subject: ''
   });
 
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -33,15 +34,16 @@ const FilterBar = ({ onFiltersChange, loading }) => {
   const handleClearFilters = () => {
     const clearedFilters = {
       search: '',
-      inputType: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      language: '',
+      subject: ''
     };
     setFilters(clearedFilters);
     onFiltersChange(clearedFilters);
   };
 
-  const hasActiveFilters = filters.search || filters.inputType || filters.startDate || filters.endDate;
+  const hasActiveFilters = filters.search || filters.startDate || filters.endDate || filters.language || filters.subject;
 
   return (
     <div className="filter-bar">
@@ -85,20 +87,7 @@ const FilterBar = ({ onFiltersChange, loading }) => {
       {showAdvanced && (
         <div className="advanced-filters">
           <div className="filter-row">
-            <div className="filter-group">
-              <label htmlFor="inputType">Input Type</label>
-              <select
-                id="inputType"
-                value={filters.inputType}
-                onChange={(e) => handleInputChange('inputType', e.target.value)}
-                className="filter-select"
-                disabled={loading}
-              >
-                <option value="">All Types</option>
-                <option value="text">Text</option>
-                <option value="audio">Audio</option>
-              </select>
-            </div>
+            {/* Input type removed: default to all types */}
 
             <div className="filter-group">
               <label htmlFor="startDate">Start Date</label>
@@ -123,6 +112,52 @@ const FilterBar = ({ onFiltersChange, loading }) => {
                 disabled={loading}
               />
             </div>
+
+            <div className="filter-group">
+              <label htmlFor="language">Language</label>
+              <select
+                id="language"
+                value={filters.language}
+                onChange={(e) => handleInputChange('language', e.target.value)}
+                className="filter-select"
+                disabled={loading}
+              >
+                <option value="">All Languages</option>
+                <option value="Kannada">Kannada</option>
+                <option value="English">English</option>
+                <option value="Hindi">Hindi</option>
+              </select>
+            </div>
+
+            {!hideSubject && (
+              <div className="filter-group">
+                <label htmlFor="subject">Subject</label>
+                <select
+                  id="subject"
+                  value={filters.subject}
+                  onChange={(e) => handleInputChange('subject', e.target.value)}
+                  className="filter-select"
+                  disabled={loading}
+                >
+                  <option value="">All Subjects</option>
+                  <option value="Mathematics">Mathematics</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Biology">Biology</option>
+                  <option value="Programming">Programming</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="History">History</option>
+                  <option value="Geography">Geography</option>
+                  <option value="Literature">Literature</option>
+                  <option value="Language">Language</option>
+                  <option value="Art">Art</option>
+                  <option value="Music">Music</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="General">General</option>
+                </select>
+              </div>
+            )}
           </div>
         </div>
       )}

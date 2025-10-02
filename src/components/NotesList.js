@@ -10,7 +10,8 @@ const NotesList = ({
   loading, 
   error, 
   onPageChange,
-  appliedFilters 
+  appliedFilters,
+  isAdmin
 }) => {
   const [selectedNote, setSelectedNote] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -117,6 +118,7 @@ const NotesList = ({
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         formatDate={formatDate}
+        isAdmin={isAdmin}
       />
     </div>
   );

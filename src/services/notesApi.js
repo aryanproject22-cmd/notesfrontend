@@ -9,7 +9,11 @@ class NotesApiService {
         search = '',
         inputType = '',
         startDate = '',
-        endDate = ''
+        endDate = '',
+        language = '',
+        subject = '',
+        sort = '',
+        sortBy = ''
       } = params;
 
       // Build query parameters
@@ -21,6 +25,10 @@ class NotesApiService {
       if (inputType) queryParams.append('inputType', inputType);
       if (startDate) queryParams.append('startDate', startDate);
       if (endDate) queryParams.append('endDate', endDate);
+      if (language) queryParams.append('language', language);
+      if (subject) queryParams.append('subject', subject);
+      if (sort) queryParams.append('sort', sort);
+      if (sortBy) queryParams.append('sortBy', sortBy);
 
       const url = `${API_BASE_URL}/notes?${queryParams.toString()}`;
       
@@ -63,4 +71,28 @@ class NotesApiService {
 }
 
 const notesApiService = new NotesApiService();
+
+// Add updateNote method to prototype for convenience
+NotesApiService.prototype.updateNote = async function(id, body = {}) {
+  try {
+    const url = `${API_BASE_URL}/notes/${id}`;
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error updating note:', error);
+    throw error;
+  }
+};
 export default notesApiService;
