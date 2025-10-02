@@ -95,4 +95,27 @@ NotesApiService.prototype.updateNote = async function(id, body = {}) {
     throw error;
   }
 };
+
+// Add deleteNote method
+NotesApiService.prototype.deleteNote = async function(id) {
+  try {
+    const url = `${API_BASE_URL}/notes/${id}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error deleting note:', error);
+    throw error;
+  }
+};
 export default notesApiService;

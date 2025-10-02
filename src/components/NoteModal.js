@@ -114,6 +114,24 @@ const NoteModal = ({ note, isOpen, onClose, formatDate, isAdmin }) => {
             </button>
           )}
 
+          {isAdmin && (
+            <button
+              className="modal-delete-button"
+              onClick={async () => {
+                if (!window.confirm('Delete this note?')) return;
+                try {
+                  await notesApi.deleteNote(note._id);
+                  // refresh list
+                  window.location.reload();
+                } catch (err) {
+                  console.error('Failed to delete note', err);
+                }
+              }}
+            >
+              Delete
+            </button>
+          )}
+
           <button 
             className="modal-close-button"
             onClick={() => { setEditing(false); onClose(); }}
